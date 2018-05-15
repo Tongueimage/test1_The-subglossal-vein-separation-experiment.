@@ -1,0 +1,32 @@
+clear;  
+close all;  
+  
+%加载原始图像  
+img = imread('graph.bmp');  
+figure, imshow(img);  
+title('初始图像');  
+  
+%构造高通滤波器  
+filter1 = fspecial('gaussian', [7 7], 0.6);  
+filter2 = fspecial('gaussian', [7 7], 1.2);  
+high_pass = filter1 - filter2;  
+  
+%利用对数变换将入射光和反射光部分分开  
+log_img = log(1.0 + double(img));  
+  
+%将高斯高通滤波器与对数转换后的图像卷积  
+high_log_part = imfilter(log_img, high_pass, 'symmetric', 'conv');  
+  
+%显示卷积后的图像  
+figure, imshow(high_log_part);  
+  
+%幂变换回来  
+high_part = exp(high_log_part) - 1.0;  
+minv = min(min(high_part));  
+maxv = max(max(high_part));  
+  
+%显示结果图像  
+resultImg = (high_part - minv) / (maxv - minv);  
+figure, imshow(resultImg);  
+title('同态滤波结果');  
+imwrite(resultImg, 'homoResult.bmp');
