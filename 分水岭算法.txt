@@ -1,0 +1,64 @@
+MATLAB实现分水岭算法如下（直接对梯度使用分水岭算法和经过开闭运算相对比） 
+%1.读取图像并求取图像的边界。 
+clc; 
+clear all; 
+rgb = imread(‘1.jpg’);%读取原图像 
+imshow(rgb); 
+I = rgb2gray(rgb);%转化为灰度图像 
+text(732,501,’Image courtesy of Corel’,… 
+‘FontSize’,7,’HorizontalAlignment’,’right’) 
+hy = fspecial(‘sobel’);%sobel算子 
+hx = hy’; 
+Iy = imfilter(double(I), hy, ‘replicate’);%滤波求y方向边缘 
+Ix = imfilter(double(I), hx, ‘replicate’);%滤波求x方向边缘 
+gradmag = sqrt(Ix.^2 + Iy.^2);%求摸 
+L = watershed(gradmag);%直接应用分水岭算法 
+Lrgb = label2rgb(L);%转化为彩色图像 
+figure; 
+imshow(Lrgb), %显示分割后的图像 
+title(‘直接使用梯度模值进行分水岭算法’) 
+%3.分别对前景和背景进行标记：本例中使用形态学重建技术对前景对象进行标记，首先使用开操作，开操作之后可以去掉一些很小的目标。 
+se = strel(‘disk’, 20);%圆形结构元素 
+Io = imopen(I, se);%形态学开操作 
+Ie = imerode(I, se);%对图像进行腐蚀 
+Iobr = imreconstruct(Ie, I);%形态学重建 
+Ioc = imclose(Io, se);%形态学关操作 
+Iobrd = imdilate(Iobr, se);%对图像进行膨胀 
+Iobrcbr = imreconstruct(imcomplement(Iobrd), … 
+imcomplement(Iobr));%形态学重建 
+Iobrcbr = imcomplement(Iobrcbr);%图像求反 
+fgm = imregionalmax(Iobrcbr);%局部极大值 
+I2 = I; 
+I2(fgm) = 255;%局部极大值处像素值设为255 
+se2 = strel(ones(5,5));%结构元素 
+fgm2 = imclose(fgm, se2);%关操作 
+fgm3 = imerode(fgm2, se2);%腐蚀 
+fgm4 = bwareaopen(fgm3, 20);%开操作 
+I3 = I; 
+I3(fgm4) = 255;%前景处设置为255 
+bw = im2bw(Iobrcbr, graythresh(Iobrcbr));%转化为二值图像 
+%4. 进行分水岭变换并显示： 
+D = bwdist(bw);%计算距离 
+DL = watershed(D);%分水岭变换 
+bgm = DL == 0;%求取分割边界 
+gradmag2 = imimposemin(gradmag, bgm | fgm4);%置最小值 
+L = watershed(gradmag2);%分水岭变换 
+I4 = I; 
+I4(imdilate(L == 0, ones(3, 3)) | bgm | fgm4) = 255;%前景及边界处置255 
+figure; 
+subplot(121) 
+imshow(I4)%突出前景及边界 
+title(‘Markers and object boundaries’) 
+Lrgb = label2rgb(L, ‘jet’, ‘w’, ‘shuffle’);%转化为伪彩色图像 
+subplot(122); imshow(Lrgb)%显示伪彩色图像 
+title(‘Colored watershed label matrix’) 
+figure; 
+imshow(I), 
+hold on 
+himage = imshow(Lrgb);%在原图上显示伪彩色图像 
+set(himage, ‘AlphaData’, 0.3); 
+title(‘Lrgb superimposed transparently on original image’) 
+参考博客： 
+http://blog.csdn.net/byxdaz/article/details/4377753 
+http://blog.sina.com.cn/s/blog_725866260100rz7x.html 
+http://blog.csdn.net/zd0303/article/details/6703068(matlab)
