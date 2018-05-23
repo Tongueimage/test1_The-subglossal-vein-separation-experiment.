@@ -70,3 +70,6 @@ test1
 Loop / uninitialized array =   0.0029
 Loop / initialized array =   0.0003
 Vectorized =   0.0000
+
+
+Conclution: logical arrays are much faster than loops (逻辑数组比循环快的多)
