@@ -60,3 +60,8 @@ contour(x,y,z);    %Contour map
 xlabel('\bfx');
 ylabel('\bfy');
 zlabel(']bfz');
+
+% use fplot or ezplot to draw the picture directly
+% fplot(@(x)sin(x)./x,[-4*pi 4*pi]);
+% title('Plot of six/x');
+% grid on;
