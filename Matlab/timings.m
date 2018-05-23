@@ -5,7 +5,10 @@
 %from 1 to 10,000 in three different ways:
 % 1. Using a for loop with an uninitialized output array
 % 2. Using a for loop with an preallocated output array
-% 2. Using vectors.
+% 3. Using vectors.
+% Calculate the square roots of all elements in a array whose values exceeds 5000. This is done in way 4 and 5.
+% 4. Using a for loop and if construct  
+% 5. Using a logical array
 %
 %Record of revision:
 % Date         Programmer          Description of chage
