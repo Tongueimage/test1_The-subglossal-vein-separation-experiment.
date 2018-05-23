@@ -13,15 +13,19 @@
 %23-May-2018                        Original code
 %
 %Define variamaxcountles:
-% ii,jj  --Loop index
+% ii,jj     --Loop index
 % average1  --Average time for calculation 1
 % average2  --Average time for calculation 2
 % average3  --Average time for calculation 3
+% average4  --Average time for calculation 4
+% average5  --Average time for calculation 5
 % maxcountcouunt --Nummaxcounter of times to loop calculation
 % square    --Array of squares
 % leap_day  --Extra day for leap year
 % month     --Month(mm)
 % year      --Year(yyyy)
+% a         --Array of input values
+% b         --Logical array to serve as a mask
 
 %Perform calculation with an uninitialized array
 % "square". This calcalation is done only once maxcountecause it is so slow.
