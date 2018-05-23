@@ -59,17 +59,46 @@ for jj=1:maxcount
     square = ii.^2;
 end
 average3=(toc)/maxcount; %Calculate square
+
+%Perform calculation using loops and branches
+maxcount = 1; %One repetition
+tic; %Start timer
+for jj=1:maxcount
+    a=1:10000;
+    for ii = 1:10000
+        if a(ii) > 5000
+            a(ii) = sqrt(a(ii));
+        end
+      
+    end
+end
+average4=(toc)/maxcount; %Calculate average time
+
+
+%Perform calculation using logical arrays.
+maxcount = 10; %One repetition
+tic; %Start time
+for jj=1:maxcount
+   a=1:10000;  %Declare array a
+   b=a>5000;   %Create mask
+   a(b)=sqrt(a(b));  %Take square root
+end
+average5=(toc)/maxcount; %Calculate square
+
 %Display results
 fprintf('Loop / uninitialized array = %8.4f\n',average1);
 fprintf('Loop / initialized array = %8.4f\n',average2);
 fprintf('Vectorized = %8.4f\n',average3);
-
+fprintf('Loop / if approach = %8.4f\n',average4);
+fprintf('Logical array approach = %8.4f\n',average5);
 
 Output:
+
 test1
 Loop / uninitialized array =   0.0029
 Loop / initialized array =   0.0003
 Vectorized =   0.0000
-
+Loop / if approach =   0.0037
+Logical array approach =   0.0003
 
 Conclution: logical arrays are much faster than loops (逻辑数组比循环快的多)
