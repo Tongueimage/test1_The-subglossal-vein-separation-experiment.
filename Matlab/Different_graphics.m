@@ -6,6 +6,8 @@
 %  1. Neddle figure
 %  2. pie figure
 %  3. Three-dimensional curve 
+%  4. Grid, Three dimensional surface diagram , Contour map
+%
 %Record of revisions:
 %Date           Programmer          Description of change
 %=====          ==============      ===========================
@@ -45,3 +47,16 @@ ylabel('\bfy');
 zlabel('\bfTime');
 axis square;
 grid on;
+
+% grid ,Three dimensional surface diagram , Contour map
+% function z(x,y) = e^(-0.5*(x^2+y^2));  
+[x ,y]=meshgrid(-4:0.2:4 , -4:0.2:4);
+z = exp(-0.5*(x.^2 + y.^2));
+mesh(x,y,z);  %use mesh function
+figure(2);
+surf(x,y,z);  %Three dimensional surface diagram
+figure(3); 
+contour(x,y,z);    %Contour map
+xlabel('\bfx');
+ylabel('\bfy');
+zlabel(']bfz');
