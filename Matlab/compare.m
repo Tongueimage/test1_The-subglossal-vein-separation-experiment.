@@ -14,8 +14,9 @@
 %count      --Number of values read/written
 %fid        --File id
 %in_array   --input array
-%msg        --Output array
-%out_array  --Operation status
+%msg        --Open error message
+%out_array  --Output array
+%status     --Operation status
 %time       --Elapsed time in seconds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate the data array.
