@@ -99,6 +99,8 @@ Read time for unformatted file =  0.000
 Read time for formatted file =  0.009
 
 
-格式化和二进制I/O（无格式文件 unformatted file）的比较，无格式文件较快，占用空间小，不会产生截断误差，但是不能移植，不能在输出设备显示文件。 
-end文件
-end
+
+%
+%Formatted and binary I/O (unformatted file) comparison, the formatless file is faster, takes up less space, 
+%does not produce truncation errors, but it cannot be ported and cannot be displayed on the output device.
+%格式化和二进制I/O（无格式文件 unformatted file）的比较，无格式文件较快，占用空间小，不会产生截断误差，但是不能移植，不能在输出设备显示文件。 
