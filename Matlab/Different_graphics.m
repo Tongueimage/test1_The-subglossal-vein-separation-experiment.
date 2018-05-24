@@ -7,6 +7,7 @@
 %  2. pie figure
 %  3. Three-dimensional curve 
 %  4. Grid, Three dimensional surface diagram , Contour map
+%  5. Open the Attribute Editor to allow the user to indirectly change the properties of the curv
 %
 %Record of revisions:
 %Date           Programmer          Description of change
@@ -33,7 +34,7 @@ pie(data,explode);
 title('\bfExample of  a Pie Plot');
 legend('One ', 'Two','Three','Four','Five');
 
-% Three-dimensional curve
+% 3. Three-dimensional curve
 % x(t)=e^(-0.2t) * cos(2t)
 % y(t) = e^(-0.2t) * sin(2t)
 % 函数表示二维机械系统振动衰退情况，x,y代表在时刻t系统位置。
@@ -48,7 +49,7 @@ zlabel('\bfTime');
 axis square;
 grid on;
 
-% grid ,Three dimensional surface diagram , Contour map
+% 4. grid ,Three dimensional surface diagram , Contour map
 % function z(x,y) = e^(-0.5*(x^2+y^2));  
 [x ,y]=meshgrid(-4:0.2:4 , -4:0.2:4);
 z = exp(-0.5*(x.^2 + y.^2));
@@ -61,7 +62,19 @@ xlabel('\bfx');
 ylabel('\bfy');
 zlabel(']bfz');
 
+%
+%5. Open the Attribute Editor to allow the user to indirectly change the properties of the curve
+%打开属性编辑器，让用户间接的改变曲线的属性
+figure(2);
+x= 0:0.1:2;
+y = x.^2;
+Hand1 = plot(x,y);
+propedit(Hand1);
+
+
 % use fplot or ezplot to draw the picture directly
 % fplot(@(x)sin(x)./x,[-4*pi 4*pi]);
 % title('Plot of six/x');
 % grid on;
+
+
