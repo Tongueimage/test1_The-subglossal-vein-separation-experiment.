@@ -97,3 +97,8 @@ Write time for unformatted file =  0.001
 Write time for formatted file =  0.011
 Read time for unformatted file =  0.000
 Read time for formatted file =  0.009
+
+
+格式化和二进制I/O（无格式文件 unformatted file）的比较，无格式文件较快，占用空间小，不会产生截断误差，但是不能移植，不能在输出设备显示文件。 
+end文件
+end
