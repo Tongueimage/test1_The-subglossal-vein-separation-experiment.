@@ -1,0 +1,41 @@
+#include"stdafx.h"
+#include <opencv2/opencv.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+int main()
+{
+	// 打开另一幅图像 
+	Mat  image = imread("B:/360/h.jpg");
+	if (!image.data)
+	{
+		cout << "不能打开图像！" << endl;
+		return 0;
+	}
+	imshow("原图", image);
+	// 标示背景图像 
+	Mat imageMask(image.size(), CV_8U, cv::Scalar(0));
+
+	rectangle(imageMask, Point(1, 1), Point(image.cols - 2, image.rows - 2), Scalar(255), 1); // 表示塔
+
+	rectangle(imageMask, Point(image.cols / 2 - 10, image.rows / 2 - 10), Point(image.cols / 2 + 10, image.rows / 2 + 10), cv::Scalar(64), 10);
+	//树 
+	rectangle(imageMask, Point(64, 284), Point(68, 300), Scalar(128), 5);
+
+	imshow("添加标记", imageMask);
+	imageMask.convertTo(imageMask, CV_32S);
+
+	// 设置marker和处理图像  
+	watershed(image, imageMask);
+
+	Mat mark1;
+	imageMask.convertTo(mark1, CV_8U);
+	namedWindow("marker");
+
+	imshow("marker", mark1);
+	imageMask.convertTo(imageMask, CV_8U, 255, 255);
+	imshow("分水岭线", imageMask);
+	waitKey(0);
+	return 0;
+}
