@@ -1,0 +1,37 @@
+
+!pip install virtualenv
+!pip install turicreate
+
+1. source activate turi
+2. jupyter notebook
+3. !pip install turicreate
+4. import turicreate as tc
+5. cd /Users/hangyiwang/Downloads/Lunwen/the_image_of/ 
+6. image_folder = ‘Images’
+7. data = tc.image_analysis.load_images(image_folder, with_path=True)
+8. data
+9. data = tc.image_analysis.load_images('Images', with_path = True)
+
+
+data['label'] = data['path'].apply(lambda path: 'Image_abnormal' if 'Image_abnormal' in path else 'Image_normal' )
+///   data['label'] = data['path'].apply(lambda path: 'doraemon' if 'doraemon' in path else 'yizhong' if 'yiz' in path else 'walle' if 'walle' in path else 'yyx' )
+9.  data
+10. data.save('doraemon-walle.sframe') #data=tc.SFrame(‘cats-dogs.sframe’)
+11. data.explore()
+12. train_data, test_data = data.random_split(0.8, seed=2).      //我设定了随机种子取值为2，这是为了保证数据拆分的一致性。以便重复验证我们的结果。tain_data,test_data=data.random_split(0.8)
+13. model = tc.image_classifier.create(train_data, target='label')
+14. predictions = model.predict(test_data).   //test model
+15. metrics = model.evaluate(test_data)
+16. print(metrics['accuracy'])
+17. predictions. # 实际看看预测结果。
+18. test_data['label’].  # 实际的标签。
+19. test_data[test_data['label'] != predictions]
+20. 
+wrong_pred_img_path = test_data[predictions != test_data['label']][0]['path']
+wrong_pred_img_path1 = test_data[predictions != test_data['label']][1]['path']
+wrong_pred_img_path2 = test_data[predictions != test_data['label’][2]['path']
+20. img = tc.Image(wrong_pred_img_path)
+21. img.show()
+22. model.export_coreml('test1.mlmodel')
+23. 
+24. # model = tc.image_classifier.create(train_data,target='label',model='squeezenet_v1.1') 牺牲准确度，但是模型的大小会减小很多
